@@ -1,0 +1,225 @@
+{
+	"openapi": "3.0.2",
+	"info": {
+		"description": "This is a test server with mongoDb, node and express.",
+		"version": "1.0.0",
+		"title": "MEAN test",
+		"termsOfService": "http://swagger.io/terms/",
+		"contact": {
+			"email": "sixbras@gmail.com"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"tags": [
+		{
+			"name": "Leagues",
+			"description": "Everything about Leagues"
+		},
+		{
+			"name": "Teams",
+			"description": "Everything about Teams"
+		},
+		{
+			"name": "Players",
+			"description": "Everything about players"
+		}
+	],
+	"servers": [
+		{
+			"url": "http://localhost:3000/api/v1",
+			"description": "Server Local"
+		},
+		{
+			"url": "https://www.production.com/api/v1",
+			"description": "Server en production"
+		}
+	],
+
+	"paths": {
+		"/leagues": {
+			"get": {
+				"tags": [ "Leagues" ],
+				"summary": "List all Leagues",
+				"description": "List all Leagues, order by name",
+				"operationId": "findAllLeagues",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/League"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/teams/findByLeague": {
+			"get": {
+				"tags": [ "Teams" ],
+				"summary": "Finds Teams by League",
+				"description": "Return an array of teams registered to a league",
+				"operationId": "findTeamsByLeague",
+				"parameters": [
+					{
+						"name": "leagueId",
+						"in": "query",
+						"description": "leagueId values that need to be used for filter",
+						"required": true,
+						"style": "form",
+						"explode": true,
+						"schema": {
+							"type": "string",
+							"example": "5d2cdcf7da07b95bb8f16ed1"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Team"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid leagueId value",
+						"content": {}
+					}
+				}
+			}
+		},
+		"/players/findByTeam": {
+			"get": {
+				"tags": [ "Players" ],
+				"summary": "Finds Players by Team",
+				"description": "Return an array of playering in a Team",
+				"operationId": "findPlayersByTeam",
+				"parameters": [
+					{
+						"name": "teamId",
+						"in": "query",
+						"description": "teamId values that need to be used for filter",
+						"required": true,
+						"style": "form",
+						"explode": true,
+						"schema": {
+							"type": "string",
+							"example": "5d2d01fdda07b95bb8f16f0a"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Player"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid teamId value",
+						"content": {}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"League": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "5d2cdcf7da07b95bb8f16ed1"
+					},
+					"name": {
+						"type": "string",
+						"example": "English Premier League"
+					},
+					"sport": {
+						"type": "string",
+						"example": "soccer"
+					}
+				}
+			},
+			"Team": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "5d2cdcf7da07b95bb8f16ed1"
+					},
+					"name": {
+						"type": "string",
+						"example": "Arsenal"
+					},
+					"thumbnail": {
+						"type": "string",
+						"example": "https://www.thesportsdb.com//images//media//team//badge//a1af2i1557005128.png"
+					}
+				}
+			},
+			"Player": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "5d2cdcf7da07b95bb8f16ed1"
+					},
+					"name": {
+						"type": "string",
+						"example": "Pierre-Emerick Aubameyang"
+					},
+					"position": {
+						"type": "string",
+						"example": "Forward"
+					},
+					"thumbnail": {
+						"type": "string",
+						"example": "https://www.thesportsdb.com/images/media/player/thumb/fnk3u51520755737.jpg"
+					},
+					"signin": {
+						"properties": {
+							"amount": {
+								"type": "number",
+								"example": 63750000
+							},
+							"currency": {
+								"type": "string",
+								"example": "eur"
+							}
+						}
+					},
+					"born": {
+						"type": "string",
+						"format": "date-time",
+						"example": "1989-06-19T01:37:19.198Z"
+					}
+				}
+			}
+		}
+	}
+}

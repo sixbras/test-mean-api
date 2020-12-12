@@ -1,0 +1,27 @@
+{
+	"name": "test-mean-api",
+	"version": "1.0.0",
+	"description": "test mongo / express / node",
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js",
+		"dev": "nodemon app.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sixbras/test-mean-api.git"
+	},
+	"author": "sixbras",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/sixbras/test-mean-api/issues"
+	},
+	"homepage": "https://github.com/sixbras/test-mean-api#readme",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"mongoose": "^5.11.7",
+		"swagger-ui-express": "^4.1.5"
+	}
+}
