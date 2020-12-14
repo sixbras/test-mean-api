@@ -104,10 +104,10 @@
 				}
 			}
 		},
-		"/players/findByTeam": {
+		"/players/findByTeamId": {
 			"get": {
 				"tags": [ "Players" ],
-				"summary": "Finds Players by Team",
+				"summary": "Finds Players by Team id",
 				"description": "Return an array of playering in a Team",
 				"operationId": "findPlayersByTeam",
 				"parameters": [
@@ -209,7 +209,7 @@
 							},
 							"currency": {
 								"type": "string",
-								"example": "eur"
+								"example": "EUR"
 							}
 						}
 					},
@@ -217,6 +217,10 @@
 						"type": "string",
 						"format": "date-time",
 						"example": "1989-06-19T01:37:19.198Z"
+					},
+					"team": {
+						"type": "string",
+						"example": "Arsenal"
 					}
 				}
 			}

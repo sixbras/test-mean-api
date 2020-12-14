@@ -8,6 +8,6 @@
 * run `npm start`
 ### API documentation
 
-La documentation de l'API est disponible application
+La documentation de l'API est disponible ici :
 
 [http://localhost:3000/api/v1/docs/](http://localhost:3000/api/v1/docs/)

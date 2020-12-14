@@ -44,23 +44,34 @@ router.get('/teams/findByLeague', (req, res) => {
 		});
 });
 
-router.get('/players/findByTeam', (req, res) => {
+router.get('/players/findByTeamId', (req, res) => {
 	const teamId = req.query.teamId;
 
 	console.log('teamId  ' + teamId);
-	Team.findById(teamId, 'players')
+	Team.findById(teamId, 'players name')
 		.then((team) => {
-			console.log('team ' + Array.isArray(team.players));
-
 			Player.find()
 				.where('_id')
 				.in(team.players)
+				.lean()
 				.exec()
 				.then((players) => {
+					players = players.map((player) => {
+						//insertion du nom de team courant
+						player.team = team.name;
+						//normalisation temporaire des codes au format du Codes des devises ISO 4217
+						if (player.signin && player.signin.currency) {
+							if (player.signin.currency == 'gpp') {
+								player.signin.currency = 'gbp';
+							}
+							if (player.signin.currency) player.signin.currency = player.signin.currency.toUpperCase();
+						}
+						return player;
+					});
 					res.status(200).json(players);
 				})
 				.catch((err) => {
-					res.status(400).json({ message: 'There is no player in team id : ${teamId}', error: err });
+					res.status(500).json({ message: `Sorry, something goes wrong in team id : ${teamId}`, error: err });
 				});
 		})
 		.catch((err) => {
